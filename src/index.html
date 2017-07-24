@@ -8,29 +8,11 @@
 
   <title><%= htmlWebpackPlugin.options.title %></title>
   <meta name="description" content="<%= htmlWebpackPlugin.options.title %>">
-
-  <!-- Configured Head Tags  -->
-  <% if (webpackConfig.htmlElements.headTags) { %>
-    <%= webpackConfig.htmlElements.headTags %>
-  <% } %>
-
-  <!-- base url -->
   <base href="<%= htmlWebpackPlugin.options.metadata.baseUrl %>">
-  
-  <!-- Configured Head Tags  -->
-  <% if (htmlWebpackPlugin.files.webpackManifest) { %>
-    <%= htmlWebpackPlugin.files.webpackManifest %>
-  <% } %>
-
-  <!-- CSS will be injected by webpack here -->
-  <!-- Preload link tags will be injected by webpack here -->
 </head>
 
 <body>
-  <div>
-    <h1>You have successfully started your Typescript application using Webpack.</h1>
-    <p>Open your console to see your printed message from the index.ts file</p>
-  </div>
+  <div id="app"></div>
 </body>
 
 </html>

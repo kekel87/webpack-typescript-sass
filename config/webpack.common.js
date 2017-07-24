@@ -7,6 +7,7 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CommonsChunkPlugin = require('webpack/lib/optimize/CommonsChunkPlugin');
 const ModuleConcatenationPlugin = require('webpack/lib/optimize/ModuleConcatenationPlugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 
 /**
@@ -17,18 +18,16 @@ const METADATA = {
     baseUrl : '/'
 };
 
-
 module.exports = function (options) {
     isProd = options.env === 'production';
     return {
-        //context: path.resolve("./src"),
         entry: {
-            app: './src/index.ts',
-            vendor: './src/vendor.ts',
-            polyfills: './src/polyfills.ts',
+            app: './src/app/index.ts',
+            vendor: './src/app/vendor.ts',
+            polyfills: './src/app/polyfills.ts',
         },        
         resolve: {
-            extensions: ['.ts', '.js', '.json']
+            extensions: ['.ts', '.js', '.json', '.scss', '.css']
         },
         module: {
             rules: [
@@ -64,20 +63,20 @@ module.exports = function (options) {
                  * Html loader support for *.html
                  */
                 {
-                    test: /\.html$/,
-                    loader: "html-loader"
+                     test: /\.html$/,
+                     loader: "html-loader"
                 },
                 /**
                  * File loader for supporting images, for example, in CSS files.
                  */
                 {
-                    test : /\.(jpg|png|gif)$/,
-                    use : 'file-loader'
+                    test : /\.(jpg|png|gif|svg)$/,
+                    use : 'file-loader?name=[name].[ext]&publicPath=assets/imgs/&outputPath=assets/imgs/'
                 },
             ]
         },
         plugins: [
-            // ModuleConcatenationPlugin(),
+            new ModuleConcatenationPlugin(),
 
             /**
              * Plugin: CommonsChunkPlugin
@@ -87,22 +86,10 @@ module.exports = function (options) {
              * See: https://webpack.github.io/docs/list-of-plugins.html#commonschunkplugin
              * See: https://github.com/webpack/docs/wiki/optimization#multi-page-app
              */
-            // new CommonsChunkPlugin({
-            //     name : 'polyfills',
-            //     filename: "polyfills.bundle.js",
-            //     //chunks : ['polyfills'],
-            //     minChunks: Infinity
-            // }),
-            // new CommonsChunkPlugin({
-            //     name: "vendor",
-            //     minChunks: Infinity,
-            //     filename: "vendor.bundle.js",
-            //     //minChunks : module => /node_modules(\\|\/)/.test(module.resource)
-            // }),
-            // Specify the correct order the scripts will be injected in
-            // new CommonsChunkPlugin({
-            //     name : ['polyfills', 'vendor'].reverse()
-            // }),
+            new CommonsChunkPlugin({
+                names: ['polyfills', 'vendor'],
+                minChunks: Infinity
+            }),
 
             /**
              * Plugin: CopyWebpackPlugin
@@ -112,15 +99,15 @@ module.exports = function (options) {
              *
              * See: https://www.npmjs.com/package/copy-webpack-plugin
              */
-            // new CopyWebpackPlugin([
-            //     {from : 'src/assets', to : 'assets'},
-            //     {from : './node_modules/tinymce/skins', to : 'assets/libs/tinymce/skins'}
-            // ], {
-            //     ignore : [
-            //         'humans.txt',
-            //         'robots.txt'
-            //     ]
-            // }),
+            new CopyWebpackPlugin([
+                {from : 'src/assets', to : 'assets'}
+            ],
+            {
+                ignore: [
+                    'datas/**/*.*'
+                ]
+            }
+            ),
 
             /*
              * Plugin: ScriptExtHtmlWebpackPlugin
@@ -133,47 +120,21 @@ module.exports = function (options) {
                 defaultAttribute : 'defer'
             }),
 
+            /*
+            * Plugin: HtmlWebpackPlugin
+            * Description: Simplifies creation of HTML files to serve your webpack bundles.
+            * This is especially useful for webpack bundles that include a hash in the filename
+            * which changes every compilation.
+            *
+            * See: https://github.com/ampedandwired/html-webpack-plugin
+            */
             new HtmlWebpackPlugin({
-                template : './src/index.html',
+                template : '!!ejs-loader!./src/index.html',
                 title : METADATA.title,
                 chunksSortMode : 'dependency',
                 metadata : METADATA,
                 inject : 'head'
-            }),
-
-            /**
-             * Plugin: HtmlElementsPlugin
-             * Description: Generate html tags based on javascript maps.
-             *
-             * If a publicPath is set in the webpack output configuration, it will be automatically added to
-             * href attributes, you can disable that by adding a "=href": false property.
-             * You can also enable it to other attribute by settings "=attName": true.
-             *
-             * The configuration supplied is map between a location (key) and an element definition object (value)
-             * The location (key) is then exported to the template under then htmlElements property in webpack configuration.
-             *
-             * Example:
-             *  Adding this plugin configuration
-             *  new HtmlElementsPlugin({
-             *    headTags: { ... }
-             *  })
-             *
-             *  Means we can use it in the template like this:
-             *  <%= webpackConfig.htmlElements.headTags %>
-             *
-             * Dependencies: HtmlWebpackPlugin
-             */
-            // new HtmlElementsPlugin({
-            //     headTags : require('./head-config.common')
-            // }),
-
-            /**
-             * Plugin: InlineManifestWebpackPlugin
-             * Inline Webpack's manifest.js in index.html
-             *
-             * https://github.com/szrenwei/inline-manifest-webpack-plugin
-             */
-            // new InlineManifestWebpackPlugin(),
+            })
         ]
     }
 };

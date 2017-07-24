@@ -6,11 +6,10 @@ const commonConfig = require('./webpack.common.js');
  * Webpack Plugins
  */
 const DefinePlugin = require('webpack/lib/DefinePlugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const LoaderOptionsPlugin = require('webpack/lib/LoaderOptionsPlugin');
 const UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin');
-const OptimizeJsPlugin = require('optimize-js-plugin');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+//const OptimizeJsPlugin = require('optimize-js-plugin');
+//const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 /**
  * Activation ou non de BundleAnalyzerPlugin
@@ -144,17 +143,9 @@ module.exports = function (env) {
              *
              * See: https://github.com/vigneshshanmugam/optimize-js-plugin
              */
-            new OptimizeJsPlugin({
-                sourceMap : false
-            }),
-
-            /**
-             * Plugin: ExtractTextPlugin
-             * Description: Extracts imported CSS files into external stylesheet
-             *
-             * See: https://github.com/webpack/extract-text-webpack-plugin
-             */
-            //new ExtractTextPlugin('[name].[contenthash].css'),
+            // new OptimizeJsPlugin({
+            //     sourceMap : false
+            // }),
 
             /**
              * Plugin: DefinePlugin
@@ -222,23 +213,23 @@ module.exports = function (env) {
              *
              * See: https://github.com/th0r/webpack-bundle-analyzer
              */
-            new BundleAnalyzerPlugin({
-                // Can be `server`, `static` or `disabled`.
-                // In `server` mode analyzer will start HTTP server to show bundle report.
-                // In `static` mode single HTML file with bundle report will be generated.
-                // In `disabled` mode you can use this plugin to just generate Webpack Stats JSON file by setting `generateStatsFile` to `true`.
-                analyzerMode : ANALYZE ? 'static' : 'disabled',
-                // analyzerMode : 'server',
-                //analyzerHost : '127.0.0.1',
-                //analyzerPort : 8888,
-                reportFilename : 'report.html',
-                defaultSizes : 'parsed',
-                openAnalyzer : true,
-                generateStatsFile : false,
-                statsFilename : 'stats.json',
-                statsOptions : null,
-                logLevel : 'info'
-            })
+            // new BundleAnalyzerPlugin({
+            //     // Can be `server`, `static` or `disabled`.
+            //     // In `server` mode analyzer will start HTTP server to show bundle report.
+            //     // In `static` mode single HTML file with bundle report will be generated.
+            //     // In `disabled` mode you can use this plugin to just generate Webpack Stats JSON file by setting `generateStatsFile` to `true`.
+            //     analyzerMode : ANALYZE ? 'static' : 'disabled',
+            //     // analyzerMode : 'server',
+            //     //analyzerHost : '127.0.0.1',
+            //     //analyzerPort : 8888,
+            //     reportFilename : 'report.html',
+            //     defaultSizes : 'parsed',
+            //     openAnalyzer : true,
+            //     generateStatsFile : false,
+            //     statsFilename : 'stats.json',
+            //     statsOptions : null,
+            //     logLevel : 'info'
+            // })
         ],
 
         /*

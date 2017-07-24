@@ -1,20 +1,16 @@
-https://github.com/emyann/typescript-webpack-starter/blob/master/webpack.config.js
-https://github.com/juristr/webpack-typescript-starter
-https://github.com/Floriangomis/Webpack-Typescript-Sass-Starter_Project
-https://github.com/AngularClass/angular-starter
-
-🚀 A damn simple ES6 and Typescript Starter kit using webpack for packaging. Perfect for bootstraping your javascript project / module regardless any framework.
-
 # Typescript Webpack Starter
-[![Build Status](https://travis-ci.org/emyann/typescript-webpack-starter.svg?branch=develop)](https://travis-ci.org/emyann/typescript-webpack-starter)
->A damn simple ES6 and Typescript Starter kit using webpack for packaging. Perfect for bootstraping your javascript project regardless any framework.
+
+>🚀 Typescript & SASS Starter kit using webpack for packaging.
 
 ## Built upon
 
+- [x] [Typescript 2](https://github.com/Microsoft/TypeScript)
+- [x] [Sass](http://sass-lang.com/)
 - [x] [Webpack 3](https://webpack.js.org/)
-- [x] [Typescript 2](https://blogs.msdn.microsoft.com/typescript/2016/07/11/announcing-typescript-2-0-beta/)
 - [x] [Webpack Dashboard](https://github.com/FormidableLabs/webpack-dashboard)
-![Imgur](http://i.imgur.com/pETTX85.png)
+
+<img src="http://i.imgur.com/pETTX85.png" width="400">
+
 
 # Getting started
 
@@ -40,13 +36,11 @@ Start a Webpack server with the production configuration
 npm run server:prod
 ```
 
-
 ## Build Only
 Build a development release
 ```bash
 npm run build
 ```
-
 
 Build a production release
 ```bash
@@ -57,7 +51,9 @@ After build phase, 3 files are generated into the `dist` folder:
 - `vendor.bundle.js` - contains the vendor dependencies
 - `index.html` - html page with references to the 2 files above
 
-## TODO
+Thanks :
+- [emyann/typescript-webpack-starter](https://github.com/emyann/typescript-webpack-starter)
+- [juristr/webpack-typescript-starter](https://github.com/juristr/webpack-typescript-starter)
+- [Floriangomis/Webpack-Typescript-Sass-Starter_Project](https://github.com/Floriangomis/Webpack-Typescript-Sass-Starter_Project)
+- [AngularClass/angular-starter](https://github.com/AngularClass/angular-starter)
 
-- [ ] Setup a webpack common configuration and use webpack-merge
-- [ ] `create-ts-app` or `create-typescript-app` CLI instead of cloning the entire repository
